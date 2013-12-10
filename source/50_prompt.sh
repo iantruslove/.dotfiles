@@ -1,143 +1,107 @@
-# My awesome bash prompt
-#
-# Copyright (c) 2012 "Cowboy" Ben Alman
-# Licensed under the MIT license.
-# http://benalman.com/about/license/
-#
-# Example:
-# [master:!?][cowboy@CowBook:~/.dotfiles]
-# [11:14:45] $
-#
-# Read more (and see a screenshot) in the "Prompt" section of
-# https://github.com/cowboy/dotfiles
+#  Customize BASH PS1 prompt to show current GIT repository and branch.
+#  by Mike Stewart - http://MediaDoneRight.com
 
-# ANSI CODES - SEPARATE MULTIPLE VALUES WITH ;
-#
-#  0  reset          4  underline
-#  1  bold           7  inverse
-#
-# FG  BG  COLOR     FG  BG  COLOR
-# 30  40  black     34  44  blue
-# 31  41  red       35  45  magenta
-# 32  42  green     36  46  cyan
-# 33  43  yellow    37  47  white
+#  SETUP CONSTANTS
+#  Bunch-o-predefined colors.  Makes reading code easier than escape sequences.
+#  I don't remember where I found this.  o_O
 
-if [[ ! "${prompt_colors[@]}" ]]; then
-  prompt_colors=(
-    "36" # information color
-    "37" # bracket color
-    "31" # error color
-  )
+# Reset
+Color_Off="\[\033[0m\]"       # Text Reset
 
-  if [[ "$SSH_TTY" ]]; then
-    # connected via ssh
-    prompt_colors[0]="32"
-  elif [[ "$USER" == "root" ]]; then
-    # logged in as root
-    prompt_colors[0]="35"
-  fi
-fi
+# Regular Colors
+Black="\[\033[0;30m\]"        # Black
+Red="\[\033[0;31m\]"          # Red
+Green="\[\033[0;32m\]"        # Green
+Yellow="\[\033[0;33m\]"       # Yellow
+Blue="\[\033[0;34m\]"         # Blue
+Purple="\[\033[0;35m\]"       # Purple
+Cyan="\[\033[0;36m\]"         # Cyan
+White="\[\033[0;37m\]"        # White
 
-# Inside a prompt function, run this alias to setup local $c0-$c9 color vars.
-alias prompt_getcolors='prompt_colors[9]=; local i; for i in ${!prompt_colors[@]}; do local c$i="\[\e[0;${prompt_colors[$i]}m\]"; done'
+# Bold
+BBlack="\[\033[1;30m\]"       # Black
+BRed="\[\033[1;31m\]"         # Red
+BGreen="\[\033[1;32m\]"       # Green
+BYellow="\[\033[1;33m\]"      # Yellow
+BBlue="\[\033[1;34m\]"        # Blue
+BPurple="\[\033[1;35m\]"      # Purple
+BCyan="\[\033[1;36m\]"        # Cyan
+BWhite="\[\033[1;37m\]"       # White
 
-# Exit code of previous command.
-function prompt_exitcode() {
-  prompt_getcolors
-  [[ $1 != 0 ]] && echo " $c2$1$c9"
-}
+# Underline
+UBlack="\[\033[4;30m\]"       # Black
+URed="\[\033[4;31m\]"         # Red
+UGreen="\[\033[4;32m\]"       # Green
+UYellow="\[\033[4;33m\]"      # Yellow
+UBlue="\[\033[4;34m\]"        # Blue
+UPurple="\[\033[4;35m\]"      # Purple
+UCyan="\[\033[4;36m\]"        # Cyan
+UWhite="\[\033[4;37m\]"       # White
 
-# Git status.
-function prompt_git() {
-  prompt_getcolors
-  local status output flags
-  status="$(git status 2>/dev/null)"
-  [[ $? != 0 ]] && return;
-  output="$(echo "$status" | awk '/# Initial commit/ {print "(init)"}')"
-  [[ "$output" ]] || output="$(echo "$status" | awk '/# On branch/ {print $4}')"
-  [[ "$output" ]] || output="$(git branch | perl -ne '/^\* (.*)/ && print $1')"
-  flags="$(
-    echo "$status" | awk 'BEGIN {r=""} \
-      /^# Changes to be committed:$/        {r=r "+"}\
-      /^# Changes not staged for commit:$/  {r=r "!"}\
-      /^# Untracked files:$/                {r=r "?"}\
-      END {print r}'
-  )"
-  if [[ "$flags" ]]; then
-    output="$output$c1:$c0$flags"
-  fi
-  echo "$c1[$c0$output$c1]$c9"
-}
+# Background
+On_Black="\[\033[40m\]"       # Black
+On_Red="\[\033[41m\]"         # Red
+On_Green="\[\033[42m\]"       # Green
+On_Yellow="\[\033[43m\]"      # Yellow
+On_Blue="\[\033[44m\]"        # Blue
+On_Purple="\[\033[45m\]"      # Purple
+On_Cyan="\[\033[46m\]"        # Cyan
+On_White="\[\033[47m\]"       # White
 
-# hg status.
-function prompt_hg() {
-  prompt_getcolors
-  local summary output bookmark flags
-  summary="$(hg summary 2>/dev/null)"
-  [[ $? != 0 ]] && return;
-  output="$(echo "$summary" | awk '/branch:/ {print $2}')"
-  bookmark="$(echo "$summary" | awk '/bookmarks:/ {print $2}')"
-  flags="$(
-    echo "$summary" | awk 'BEGIN {r="";a=""} \
-      /(modified)/     {r= "+"}\
-      /(unknown)/      {a= "?"}\
-      END {print r a}'
-  )"
-  output="$output:$bookmark"
-  if [[ "$flags" ]]; then
-    output="$output$c1:$c0$flags"
-  fi
-  echo "$c1[$c0$output$c1]$c9"
-}
+# High Intensty
+IBlack="\[\033[0;90m\]"       # Black
+IRed="\[\033[0;91m\]"         # Red
+IGreen="\[\033[0;92m\]"       # Green
+IYellow="\[\033[0;93m\]"      # Yellow
+IBlue="\[\033[0;94m\]"        # Blue
+IPurple="\[\033[0;95m\]"      # Purple
+ICyan="\[\033[0;96m\]"        # Cyan
+IWhite="\[\033[0;97m\]"       # White
 
-# SVN info.
-function prompt_svn() {
-  prompt_getcolors
-  local info="$(svn info . 2> /dev/null)"
-  local last current
-  if [[ "$info" ]]; then
-    last="$(echo "$info" | awk '/Last Changed Rev:/ {print $4}')"
-    current="$(echo "$info" | awk '/Revision:/ {print $2}')"
-    echo "$c1[$c0$last$c1:$c0$current$c1]$c9"
-  fi
-}
+# Bold High Intensty
+BIBlack="\[\033[1;90m\]"      # Black
+BIRed="\[\033[1;91m\]"        # Red
+BIGreen="\[\033[1;92m\]"      # Green
+BIYellow="\[\033[1;93m\]"     # Yellow
+BIBlue="\[\033[1;94m\]"       # Blue
+BIPurple="\[\033[1;95m\]"     # Purple
+BICyan="\[\033[1;96m\]"       # Cyan
+BIWhite="\[\033[1;97m\]"      # White
 
-# Maintain a per-execution call stack.
-prompt_stack=()
-trap 'prompt_stack=("${prompt_stack[@]}" "$BASH_COMMAND")' DEBUG
+# High Intensty backgrounds
+On_IBlack="\[\033[0;100m\]"   # Black
+On_IRed="\[\033[0;101m\]"     # Red
+On_IGreen="\[\033[0;102m\]"   # Green
+On_IYellow="\[\033[0;103m\]"  # Yellow
+On_IBlue="\[\033[0;104m\]"    # Blue
+On_IPurple="\[\033[10;95m\]"  # Purple
+On_ICyan="\[\033[0;106m\]"    # Cyan
+On_IWhite="\[\033[0;107m\]"   # White
 
-function prompt_command() {
-  local exit_code=$?
-  # If the first command in the stack is prompt_command, no command was run.
-  # Set exit_code to 0 and reset the stack.
-  [[ "${prompt_stack[0]}" == "prompt_command" ]] && exit_code=0
-  prompt_stack=()
+# Various variables you might want for your PS1 prompt instead
+Time12h="\T"
+Time12a="\@"
+PathShort="\w"
+PathFull="\W"
+NewLine="\n"
+Jobs="\j"
 
-  # Manually load z here, after $? is checked, to keep $? from being clobbered.
-  [[ "$(type -t _z)" ]] && _z --add "$(pwd -P 2>/dev/null)" 2>/dev/null
 
-  # While the simple_prompt environment var is set, disable the awesome prompt.
-  [[ "$simple_prompt" ]] && PS1='\n$ ' && return
+# This PS1 snippet was adopted from code for MAC/BSD I saw from: http://allancraig.net/index.php?option=com_content&view=article&id=108:ps1-export-command-for-git&catid=45:general&Itemid=96
+# I tweaked it to work on UBUNTU 11.04 & 11.10 plus made it mo' better
 
-  prompt_getcolors
-  # http://twitter.com/cowboy/status/150254030654939137
-  PS1="\n"
-  # svn: [repo:lastchanged]
-  PS1="$PS1$(prompt_svn)"
-  # git: [branch:flags]
-  PS1="$PS1$(prompt_git)"
-  # hg:  [branch:flags]
-  PS1="$PS1$(prompt_hg)"
-  # misc: [cmd#:hist#]
-  # PS1="$PS1$c1[$c0#\#$c1:$c0!\!$c1]$c9"
-  # path: [user@host:path]
-  PS1="$PS1$c1[$c0\u$c1@$c0\h$c1:$c0\w$c1]$c9"
-  PS1="$PS1\n"
-  # date: [HH:MM:SS]
-  PS1="$PS1$c1[$c0$(date +"%H$c1:$c0%M$c1:$c0%S")$c1]$c9"
-  # exit code: 127
-  PS1="$PS1$(prompt_exitcode "$exit_code")"
-  PS1="$PS1 \$ "
-}
+export PS1=$IBlack$Time12h$Color_Off'$(git branch &>/dev/null;\
+if [ $? -eq 0 ]; then \
+  echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
+  if [ "$?" -eq "0" ]; then \
+    # @4 - Clean repository - nothing to commit
+    echo "'$Green'"$(__git_ps1 " (%s)"); \
+  else \
+    # @5 - Changes to working tree
+    echo "'$IRed'"$(__git_ps1 " {%s}"); \
+  fi) '$BYellow$PathShort$Color_Off'\$ "; \
+else \
+  # @2 - Prompt when not in GIT repo
+  echo " '$Yellow$PathShort$Color_Off'\$ "; \
+fi)'
 
-PROMPT_COMMAND="prompt_command"
