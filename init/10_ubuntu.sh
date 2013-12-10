@@ -31,8 +31,8 @@
 # fi
 
 # # Update APT.
-# e_header "Updating APT"
-# sudo apt-get -qq update
+e_header "Updating apt packages"
+sudo apt-get -qq update
 # sudo apt-get -qq dist-upgrade
 
 # Install APT packages.
@@ -47,6 +47,7 @@ packages=(
 #  nmap
 #  telnet
 #  htop
+  python-software-properties
 )
 
 list=()
@@ -62,6 +63,11 @@ if (( ${#list[@]} > 0 )); then
     sudo apt-get -qq install "$package"
   done
 fi
+
+# Install emacs24
+sudo add-apt-repository -y ppa:cassou/emacs
+sudo apt-get -qq update
+sudo apt-get -qq install emacs24
 
 # # Install Git Extras
 # if [[ ! "$(type -P git-extras)" ]]; then
