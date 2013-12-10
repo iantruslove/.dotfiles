@@ -4,10 +4,10 @@ if [[ ! -d ~/.emacs.d ]]; then
 fi
 
 # Install cask
-if [[ -e ~/.cask/bin/cask ]]; then
+if [[ ! -e ~/.cask/bin/cask ]]; then
     curl -fsSkL https://raw.github.com/cask/cask/master/go | python
-    cd ~/.emacs.d
-    ~/.cask/bin/cask install
-    cd ~
 fi
 
+cd ~/.emacs.d
+~/.cask/bin/cask install
+cd ~
