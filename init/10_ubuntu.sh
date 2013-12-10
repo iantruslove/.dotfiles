@@ -67,7 +67,7 @@ fi
 
 # Install emacs24
 sudo add-apt-repository -y ppa:cassou/emacs
-sudo apt-get -qq update
+sudo apt-get update
 sudo apt-get -qq install emacs24
 
 # # Install Git Extras
