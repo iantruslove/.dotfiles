@@ -11,7 +11,7 @@ I finally decided that I wanted to be able to execute a single command to "boots
 That command is [dotfiles][dotfiles], and this is my "dotfiles" Git repo.
 
 [dotfiles]: bin/dotfiles
-[bin]: https://github.com/cowboy/dotfiles/tree/master/bin
+[bin]: https://github.com/iantruslove/.dotfiles/tree/master/bin
 
 ## What, exactly, does the "dotfiles" command do?
 
@@ -40,19 +40,13 @@ Note:
 ### Ubuntu Notes
 
 * You need to be an administrator (for `sudo`).
-* You might want to set up your ubuntu server [like I do it](/cowboy/dotfiles/wiki/ubuntu-setup), but then again, you might not.
+* You might want to set up your ubuntu server [like I do it](/iantruslove/.dotfiles/wiki/ubuntu-setup), but then again, you might not.
 * Either way, you should at least update/upgrade APT with `sudo apt-get -qq update && sudo apt-get -qq dist-upgrade` first.
 
 ### Actual Installation
 
 ```sh
-bash -c "$(curl -fsSL https://bit.ly/cowboy-dotfiles)" && source ~/.bashrc
-```
-
-If, for some reason, [bit.ly](https://bit.ly/) is down, you can use the canonical URL.
-
-```sh
-bash -c "$(curl -fsSL https://raw.github.com/cowboy/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
+bash -c "$(curl -fsSL https://raw.github.com/iantruslove/.dotfiles/master/bin/dotfiles)" && source ~/.bashrc
 ```
 
 ## The "init" step
@@ -110,11 +104,18 @@ Any file in the `copy` subdirectory will be copied into `~/`. Any file that _nee
 ## The ~/ "link" step
 Any file in the `link` subdirectory gets symbolically linked with `ln -s` into `~/`. Edit these, and you change the file in the repo. Don't link files containing sensitive data, or you might accidentally commit that data!
 
-## Aliases and Functions
-To keep things easy, the `~/.bashrc` and `~/.bash_profile` files are extremely simple, and should never need to be modified. Instead, add your aliases, functions, settings, etc into one of the files in the `source` subdirectory, or add a new file. They're all automatically sourced when a new shell is opened. Take a look, I have [a lot of aliases and functions](https://github.com/cowboy/dotfiles/tree/master/source). I even have a [fancy prompt](source/50_prompt.sh) that shows the current directory, time and current git/svn repo status.
+## Aliases and Functions To keep things easy, the `~/.bashrc` and
+`~/.bash_profile` files are extremely simple, and should never need to
+be modified. Instead, add your aliases, functions, settings, etc into
+one of the files in the `source` subdirectory, or add a new
+file. They're all automatically sourced when a new shell is
+opened. Take a look, I have
+[a lot of aliases and functions](https://github.com/iantruslove/.dotfiles/tree/master/source). I
+even have a [fancy prompt](source/50_prompt.sh) that shows the current
+directory, time and current git/svn repo status.
 
 ## Scripts
-In addition to the aforementioned [dotfiles][dotfiles] script, there are a few other [bash scripts][bin]. This includes [ack](https://github.com/petdance/ack), which is a [git submodule](https://github.com/cowboy/dotfiles/tree/master/libs).
+In addition to the aforementioned [dotfiles][dotfiles] script, there are a few other [bash scripts][bin]. This includes [ack](https://github.com/petdance/ack), which is a [git submodule](https://github.com/iantruslove/.dotfiles/tree/master/libs).
 
 * [dotfiles][dotfiles] - (re)initialize dotfiles. It might ask for your password (for `sudo`).
 * [src](link/.bashrc#L6-15) - (re)source all files in `source` directory
