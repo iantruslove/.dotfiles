@@ -48,6 +48,7 @@ packages=(
 #  telnet
 #  htop
   python-software-properties
+  tmux
 )
 
 list=()
