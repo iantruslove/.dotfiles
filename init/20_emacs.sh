@@ -1,6 +1,6 @@
 # Clone .emacs.d
 if [[ ! -d ~/.emacs.d ]]; then
-    git clone --recursive git://github.com/iantruslove/.emacs.d.git ~/.emacs.d
+    git clone --recursive git@github.com:iantruslove/.emacs.d.git ~/.emacs.d
 fi
 
 # Install cask
