@@ -22,18 +22,11 @@ if [[ "$(type -P brew)" ]]; then
   # Install Homebrew recipes.
   recipes=(
     bash
-#    ssh-copy-id
-#    git
-#    git-extras
-#    hub
-#    tree
-#    sl
-#    id3tool
+    curl
+    wget
+    git
     cowsay
-#    lesspipe
-#    nmap
-#    htop-osx
-#    man2html
+    htop-osx
   )
 
   list="$(to_install "${recipes[*]}" "$(brew list)")"

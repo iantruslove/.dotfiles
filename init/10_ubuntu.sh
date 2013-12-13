@@ -41,12 +41,9 @@ packages=(
 #  libssl-dev
 #  git-core
   tree
-#  sl
-#  id3tool
+  curl
   cowsay
-#  nmap
-#  telnet
-#  htop
+  htop
   python-software-properties
   tmux
 )
