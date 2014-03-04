@@ -147,6 +147,11 @@ fi
 # Update existing sudo time stamp if set, otherwise do nothing.
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
+# Ensure github.com's SSH key is in known_hosts
+ssh-keyscan -t rsa,dsa github.com 2>&1 | sort -u - ~/.ssh/known_hosts > ~/.ssh/tmp_hosts
+cat ~/.ssh/tmp_hosts >> ~/.ssh/known_hosts
+rm ~/.ssh/tmp_hosts
+
 # Initialize.
 if [[ ! -d ~/.dotfiles ]]; then
   new_dotfiles_install=1
