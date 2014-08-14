@@ -89,19 +89,43 @@ Jobs="\j"
 
 # This PS1 snippet was adopted from code for MAC/BSD I saw from: http://allancraig.net/index.php?option=com_content&view=article&id=108:ps1-export-command-for-git&catid=45:general&Itemid=96
 # I tweaked it to work on UBUNTU 11.04 & 11.10 plus made it mo' better
+#
+# Prompt command generates a prompt after each command!
+# See http://stackoverflow.com/a/16715681/594677
 
-export PS1=$IBlack$Time12h$Color_Off'$(git branch &>/dev/null;\
-if [ $? -eq 0 ]; then \
-  echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
-  if [ "$?" -eq "0" ]; then \
-    # @4 - Clean repository - nothing to commit
-    echo "'$Green'"$(__git_ps1 " (%s)"); \
-  else \
-    # @5 - Changes to working tree
-    echo "'$IRed'"$(__git_ps1 " {%s}"); \
-  fi) '$BYellow$PathShort$Color_Off'\$ "; \
-else \
-  # @2 - Prompt when not in GIT repo
-  echo " '$Yellow$PathShort$Color_Off'\$ "; \
-fi)'
+export PROMPT_COMMAND=__prompt_command  # Func to gen PS1 after CMDs
 
+function __prompt_command() {
+    local EXIT="$?"             # This needs to be first
+    PS1=""
+
+    # Display username and host, in bold if there was an error
+    if [ $EXIT != 0 ]; then
+        PS1+="$BIWhite\u@\h$Color_Off"
+    else
+        PS1+="\u@\h$Color_Off"
+    fi
+
+    # Show the git status
+    PS1+='$(git branch &>/dev/null;\
+            if [ $? -eq 0 ]; then \
+              echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
+              if [ "$?" -eq "0" ]; then \
+                # @4 - Clean repository - nothing to commit
+                echo "'$Green'"$(__git_ps1 " (%s)"); \
+              else \
+                # @5 - Changes to working tree
+                echo "'$IRed'"$(__git_ps1 " {%s}"); \
+              fi) '$BYellow$PathShort$Color_Off'"; \
+            else \
+              # @2 - Prompt when not in GIT repo
+              echo " '$Yellow$PathShort$Color_Off'"; \
+            fi)'
+
+    # Show the last error code in red, if there was one
+    if [ $EXIT != 0 ]; then
+        PS1+=" $BIRed[$EXIT]$Color_Off"      # Add red if exit code non 0
+    fi
+
+    PS1+=" $ "
+}
