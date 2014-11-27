@@ -1,5 +1,5 @@
 {:user {:aliases {"slamhound" ["run" "-m" "slam.hound"]}
-        :plugins [[cider/cider-nrepl "0.7.0"]
+        :plugins [[cider/cider-nrepl "0.8.1"]
                   [lein-pprint "1.1.1"]
                   [lein-bikeshed "0.1.7"]
                   [lein-kibit "0.0.8"]]
