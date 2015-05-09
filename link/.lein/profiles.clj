@@ -20,3 +20,26 @@
                        ;; [leiningen #= (leiningen.core.main/leiningen-version)]
                        ;; [im.chit/vinyasa "0.2.0"]
                        [spyscope "0.1.4"]]}}
+
+;;;; WIP: more emacs-like Gorilla keybindings.
+;; :gorilla-options {:keymap { ;; "command:app:commands" ""
+;;                            ;; "command:worksheet:leaveBack" "alt+p"
+;;                            ;; "command:worksheet:leaveForward" "alt+n"
+;;                            "command:evaluator:evaluate" "ctrl+c ctrl+e"
+;;                            "command:evaluator:evaluate-all" "ctrl+c ctrl+k"
+;;                            ;; "command:worksheet:clear-output" ""
+;;                            ;; "command:worksheet:clear-all" ""
+;;                            ;; "command:worksheet:delete" ""
+;;                            ;; "command:worksheet:changeToFree" ""
+;;                            ;; "command:worksheet:changeToCode" ""
+;;                            "command:app:open" "ctrl+x ctrl+f"
+;;                            "command:app:save" "ctrl+x ctrl+s"
+;;                            "command:app:saveas" "ctrl+x ctrl+w"
+;;                            "command:worksheet:newBelow" "ctrl+o"
+;;                            ;; "command:worksheet:newAbove" ""
+;;                            ;; "command:worksheet:moveUp" ""
+;;                            ;; "command:worksheet:moveDown" ""
+;;                            "command:docs:clojuredocs" "ctrl+c ctrl+d"
+;;                            ;; "command:app:reset-worksheet" ""
+;;                            ;; "command:worksheet:completions" ""
+;;                            }}
