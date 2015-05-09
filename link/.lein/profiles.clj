@@ -2,7 +2,7 @@
         :plugins [[cider/cider-nrepl "0.8.2"]
                   [lein-pprint "1.1.1"]
                   [lein-bikeshed "0.1.7"]
-                  [lein-kibit "0.0.8"]]
+                  [lein-kibit "0.1.2"]]
         :source-paths ["/home/vagrant/.lein/src"]
         :injections [;; humane-test-output makes clojure.test output more better
                      (require 'pjstadig.humane-test-output)
