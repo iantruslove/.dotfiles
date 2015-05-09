@@ -9,17 +9,16 @@
                      (pjstadig.humane-test-output/activate!)
 
                      ;; Spyscope is for tracing.
-                     (require 'spyscope.core)
-                     ]
+                     (require 'spyscope.core)]
         :dependencies [[org.clojure/java.classpath "0.2.2"]
                        [org.clojure/tools.namespace "0.2.4"]
                        [org.clojure/tools.trace "0.7.6"]
                        [evalive "1.1.0"]
-                       [pjstadig/humane-test-output "0.6.0"]
+                       [pjstadig/humane-test-output "0.7.0"]
                        [slamhound "1.5.5"]
                        ;; [leiningen #= (leiningen.core.main/leiningen-version)]
                        ;; [im.chit/vinyasa "0.2.0"]
-                       [spyscope "0.1.4"]]}}
+                       [spyscope "0.1.5"]]}}
 
 ;;;; WIP: more emacs-like Gorilla keybindings.
 ;; :gorilla-options {:keymap { ;; "command:app:commands" ""
