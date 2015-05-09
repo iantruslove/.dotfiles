@@ -10,23 +10,6 @@
 
                      ;; Spyscope is for tracing.
                      (require 'spyscope.core)
-
-                     ;; ;; Vinyasa: https://github.com/zcaudate/vinyasa
-                     ;; (require '[vinyasa.inject :as inj])
-                     ;; (inj/inject 'clojure.core
-                     ;;             '[[vinyasa.inject inject]
-                     ;;               [vinyasa.pull pull]
-                     ;;               [vinyasa.lein lein]
-                     ;;               [vinyasa.reimport reimport]
-                     ;;               [user dlet plet]])
-                     ;; (inj/inject 'clojure.core '>
-                     ;;             '[[clojure.tools.namespace.repl refresh]
-                     ;;               [clojure.repl apropos dir doc find-doc source
-                     ;;                pst [root-cause >cause]]
-                     ;;               [clojure.pprint pprint]
-                     ;;               [clojure.java.shell sh]
-                     ;;               [clojure.tools.trace trace-ns trace-vars
-                     ;;                untrace-ns untrace-vars]])
                      ]
         :dependencies [[org.clojure/java.classpath "0.2.2"]
                        [org.clojure/tools.namespace "0.2.4"]
