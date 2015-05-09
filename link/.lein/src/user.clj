@@ -1,5 +1,16 @@
 (ns user
-  (:require [evalive.core]))
+  (:require [clojure.pprint]
+            [clojure.tools.namespace.repl]
+            [clojure.tools.trace]
+            [evalive.core]))
+
+(def pprint #'clojure.pprint/pprint)
+
+(def refresh-all #'clojure.tools.namespace.repl/refresh-all)
+
+(def trace-vars #'clojure.tools.trace/trace-vars)
+
+(def untrace-vars #'clojure.tools.trace/untrace-vars)
 
 (defmacro dlet [bindings & body]
   `(let [~@(mapcat (fn [[n v]]
