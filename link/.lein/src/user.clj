@@ -1,10 +1,7 @@
 (ns user
   (:require [clojure.pprint]
             [clojure.tools.namespace.repl]
-            [clojure.tools.trace]
-            [evalive.core]))
-
-(def pprint #'clojure.pprint/pprint)
+            [clojure.tools.trace]))
 
 (def refresh-all #'clojure.tools.namespace.repl/refresh-all)
 
