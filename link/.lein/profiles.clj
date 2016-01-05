@@ -1,5 +1,5 @@
 {:user {:aliases {"slamhound" ["run" "-m" "slam.hound"]}
-        :plugins [[cider/cider-nrepl "0.9.1"]
+        :plugins [[cider/cider-nrepl "0.10.0"]
                   [refactor-nrepl "1.1.0"]
                   [lein-pprint "1.1.1"]
                   [lein-bikeshed "0.2.0"]
@@ -12,7 +12,7 @@
                      ;; Spyscope is for tracing.
                      (require 'spyscope.core)]
         :dependencies [[org.clojure/tools.namespace "0.2.11"]
-                       [org.clojure/tools.nrepl "0.2.10"]
+                       [org.clojure/tools.nrepl "0.2.12"]
                        [org.clojure/tools.trace "0.7.8"]
                        [pjstadig/humane-test-output "0.7.0"]
                        [slamhound "1.5.5"]
