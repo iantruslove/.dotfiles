@@ -1,7 +1,8 @@
 (ns user
   (:require [clojure.pprint]
             [clojure.tools.namespace.repl]
-            [clojure.tools.trace]))
+            [clojure.tools.trace]
+            [evalive.core :as evalive]))
 
 (def refresh-all #'clojure.tools.namespace.repl/refresh-all)
 
@@ -19,5 +20,5 @@
 
 (defmacro plet [bindings & body]
   `(let ~bindings
-     (clojure.pprint/pprint (evalive.core/lexical-context))
+     (clojure.pprint/pprint (evalive/lexical-context))
      ~@body))
