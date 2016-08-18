@@ -2,7 +2,10 @@
         :plugins [[lein-pprint "1.1.1"]
                   [lein-bikeshed "0.2.0"]
                   [lein-auto "0.1.2"]
-                  [lein-ancient "0.6.7" :exclusions [org.clojure/clojure]]
+                  [lein-ancient "0.6.7"
+                   :exclusions [com.fasterxml.jackson.dataformat/jackson-dataformat-smile
+                                org.clojure/clojure
+                                cheshire com.fasterxml.jackson.core/jackson-core]]
                   [jonase/eastwood "0.2.3"]]
 
         :injections [;; humane-test-output makes clojure.test output more better
