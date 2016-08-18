@@ -57,3 +57,8 @@ Desktop.ini
 
 # NPM
 .npmignore
+
+# Clojure gubbins
+.lein-repl-history
+.lein-failures
+.nrepl-port
